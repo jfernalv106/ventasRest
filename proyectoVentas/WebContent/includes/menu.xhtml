@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<style type="text/css">
+@
+-moz-document url-prefix () {li span.label-danger {
+	margin-top: -20px;
+}
+
+}
+.swal2-popup {
+	font-size: 1.7rem !important;
+}
+
+.mayusculas {
+	text-transform: uppercase;
+}
+</style>
+
+	<script src="#{resource['js/sweetalert2.all.min.js']}"></script>
+	<script src="#{resource['js/push.min.js']}"></script>
+	<script src="#{resource['js/aepJS.js']}"></script>
+	<script src="#{resource['js/ContainerValidator.js']}"></script>
+
+	<ul class="sidebar-menu tree" data-widget="tree">
+
+		<li class="treeview"><a href="#"
+			style="display:  'block'">
+				<i class="fa fa-gears"></i> <span>Operaciones</span> <span
+				class="pull-right-container"> <i
+					class="fa fa-angle-left pull-right"></i>
+			</span>
+		</a>
+
+			<ul class="treeview-menu">
+
+				<li><p:link href="#{request.contextPath}/encabezado">
+						<i class="fa fa-header"></i>
+						<span>Producto</span>
+					</p:link></li>
+
+				<li class="treeview"><a href="#" style="display: 'none'"> <i
+						class="fa fa-files-o"></i> <span>Papeleta de Recepción</span> <span
+						class="pull-right-container"> <i
+							class="fa fa-angle-left pull-right"></i>
+					</span>
+				</a>
+					<ul class="treeview-menu">
+						<li><p:link href="#">
+								<i class="fa fa-file-text-o"></i>
+								<span>Papeleta FCL Directa</span>
+							</p:link></li>
+
+					</ul></li>
+
+
+
+			</ul></li>
+	</ul>
+	<script type="text/javascript">
+        if (isMobile()) {
+            $('ul.sidebar-menu a.ui-link').click(function () {
+                $(this).prop('disabled', true);
+                showBar();
+            })
+        }
+    </script>
+
+</ui:composition>
