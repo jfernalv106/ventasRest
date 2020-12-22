@@ -5,8 +5,13 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,28 +35,31 @@ public class Venta implements Serializable {
 	private Date fechaCr;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence_venta")
+	@SequenceGenerator(name = "sequence_venta", sequenceName = "seq_venta", allocationSize = 1, schema = AppConfig.ECHEMA, catalog = AppConfig.CATALOGO_DB)
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return id;
+	}
+	@Column(name = "usuarioCr")
+	public String getUsuarioCr() {
+		return usuarioCr;
+	}
+	@CreationTimestamp
+	@Column(name = "fechaCr")
+	public Date getFechaCr() {
+		return fechaCr;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	@Column(name = "usuarioCr")
-	public String getUsuarioCr() {
-		return usuarioCr;
-	}
 
 	public void setUsuarioCr(String usuarioCr) {
 		this.usuarioCr = usuarioCr;
 	}
 
-	@Column(name = "fechaCr")
-	public Date getFechaCr() {
-		return fechaCr;
-	}
 
 	public void setFechaCr(Date fechaCr) {
 		this.fechaCr = fechaCr;

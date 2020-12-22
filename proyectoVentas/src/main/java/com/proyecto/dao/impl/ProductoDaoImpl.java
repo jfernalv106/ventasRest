@@ -20,6 +20,10 @@ public class ProductoDaoImpl implements ProductoDao {
 		sessionFactory.getCurrentSession().persist(producto);
 	}
 	@Override
+	public void actualizar(Producto producto) {
+		sessionFactory.getCurrentSession().update(producto);
+	}
+	@Override
 	public List<Producto> listaProdutos() {
 		String query = "FROM Producto as pr";
 		return sessionFactory.getCurrentSession().createQuery(query, Producto.class).list();

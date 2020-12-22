@@ -14,4 +14,6 @@ public interface ProductoDao {
 
 	List<Producto> listaProductoPorNombre(String nombre);
 
+	void actualizar(Producto producto);
+
 }

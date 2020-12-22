@@ -1,6 +1,5 @@
 package com.proyecto.config;
 
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
@@ -25,23 +24,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.proyecto.entity.Producto;
 import com.proyecto.entity.Usuario;
+import com.proyecto.entity.Venta;
+import com.proyecto.entity.VentaProducto;
 import com.proyecto.ftp.ConectaFtp;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScans(value = { 
-		@ComponentScan("com.proyecto.dao"), 
-		@ComponentScan("com.proyecto.service"),
-		@ComponentScan("com.proyecto.entity"), 
-		@ComponentScan("com.proyecto.config"),
-		@ComponentScan("com.proyecto.bean"), 
-		@ComponentScan("com.github.adminfaces.template"),
-		@ComponentScan("com.proyecto.mirrorentity"), 
-		@ComponentScan("com.proyecto.sap.entity"),
-		@ComponentScan("com.proyecto.entity.vistas"), 
-		@ComponentScan("com.proyecto.sap.texval.entity"),
-		@ComponentScan("com.proyecto.ftp"), 
-		@ComponentScan("com.proyecto.report") })
+@ComponentScans(value = { @ComponentScan("com.proyecto.dao"), @ComponentScan("com.proyecto.service"),
+		@ComponentScan("com.proyecto.entity"), @ComponentScan("com.proyecto.config"),
+		@ComponentScan("com.proyecto.bean"), @ComponentScan("com.github.adminfaces.template"),
+		@ComponentScan("com.proyecto.mirrorentity"), @ComponentScan("com.proyecto.sap.entity"),
+		@ComponentScan("com.proyecto.entity.vistas"), @ComponentScan("com.proyecto.sap.texval.entity"),
+		@ComponentScan("com.proyecto.ftp"), @ComponentScan("com.proyecto.report") })
 
 /**
  * Clase encargada de configurar conexiones de base de datos.
@@ -82,13 +76,13 @@ public class AppConfig {
 	@Bean
 	public DataSource getDataSource() {
 
-		  DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		  
-		  dataSource.setDriverClassName("org.postgresql.Driver");
-		  dataSource.setUrl(URL + CATALOGO_DB);
-		  dataSource.setSchema(ECHEMA);
-		  dataSource.setUsername(USER);
-		  dataSource.setPassword(PASS);
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl(URL + CATALOGO_DB);
+		dataSource.setSchema(ECHEMA);
+		dataSource.setUsername(USER);
+		dataSource.setPassword(PASS);
 
 		return dataSource;
 	}
@@ -113,19 +107,13 @@ public class AppConfig {
 		props.put("hibernate.id.new_generator_mappings", "false");
 		props.put("hibernate.connection.autocommit", "true");
 		props.put("hibernate.connection.pool_size", "100");
-		
 
-		
 		props.put("hibernate.connection.isolation", String.valueOf(Connection.TRANSACTION_READ_UNCOMMITTED));
 		factoryBean.setHibernateProperties(props);
 
 		/* se agregan clases bean para trabajar con hibernate */
-		factoryBean.setAnnotatedClasses(
-				Usuario.class,
-				Producto.class);
+		factoryBean.setAnnotatedClasses(Usuario.class, Producto.class,Venta.class,VentaProducto.class);
 
-		
-		
 		return factoryBean;
 	}
 
@@ -157,31 +145,21 @@ public class AppConfig {
 		mailSender.setJavaMailProperties(javaMailProperties);
 		return mailSender;
 	}
-	
-	
-	
-	
-	
-	
-
-
 
 	@Bean
 	public ConectaFtp conectaFtpLocal() throws IOException {
 		ConectaFtp ftp = new ConectaFtp(server, userFtp, passFtp, carpeta, img);
 		return ftp;
 	}
-	
 
-	
 	@Bean
-    public TaskExecutor taskExecutor() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5);
-        executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(25);
-        executor.setKeepAliveSeconds(60);
-        return executor;
-    }
+	public TaskExecutor taskExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(5);
+		executor.setMaxPoolSize(10);
+		executor.setQueueCapacity(25);
+		executor.setKeepAliveSeconds(60);
+		return executor;
+	}
 
 }
