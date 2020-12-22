@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:adm="http://github.com/adminfaces"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Ventas</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['favicon/favicon.ico']}" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['favicon/favicon-16x16.png']}" sizes="16x16" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['favicon/favicon-96x96.png']}" sizes="96x96" />
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="theme-color" content="#444" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="#{resource['img/marval.ico']}" />
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+
+<h:body styleClass="hold-transition login-page">
+
+	<style>
+.login-logo, .register-logo {
+	font-size: 35px !important;
+	text-align: center !important;
+	margin-bottom: 25px !important;
+	font-weight: 300 !important;
+}
+
+.vid {
+    position: absolute; 
+    top: 0; left:0;
+    width: 100%; 
+    height: 100vh; 
+    z-index: -1;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .vid {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .vid {
+    width: auto;
+    height: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-box {
+    background: url('..img/DSC00905.JPG') center center / cover no-repeat;
+  }
+
+  .vid {
+    display: none;
+  }
+}
+
+html, body {
+    height: auto;
+}
+
+</style>
+
+	<script src="#{resource['js/sweetalert2.all.min.js']}"></script>
+	<script src="#{resource['js/push.min.js']}"></script>
+	<script src="#{resource['js/aepJS.js']}"></script>
+
+	<div id="loader" class="load-bar" style="display: none">
+		<div class="bar"></div>
+		<div class="bar"></div>
+		<div class="bar"></div>
+	</div>
+
+	<div class="cont">
+		<span class="text1" style="background: transparent;"><b>Proyecto</b>Ventas</span> 
+		<span class="text2">Sistema De Ventas</span>
+	</div>
+
+	<div class="login-box ui-flat">
+	
+		<div class='vid'>
+			<video id="video" autoplay="autoplay" loop="loop" style="width:100%; height:100%" 
+				poster="#{resource['img/DSC00905.JPG']}">
+				<source src="#{resource['img/video-corp-01.mp4']}" type="video/mp4"></source>
+			</video>
+		</div>
+	
+	
+		<div class="login-logo">
+		</div>
+		<!-- /.login-logo -->
+		<div class="box login-box-body"
+			style="-webkit-border-radius: 0px !important; border-radius: 10px !important; opacity: 0.88;">
+			<h:form id="loginForm">
+				<p:messages closable="true" id="mensajes" />
+				
+				<h:inputHidden id="versionNav" value="#{loginBean.versionNav}" />
+
+				<div class="form-group has-feedback">
+					<p:inputText value="#{loginBean.email}" id="nombreUsr"
+						styleClass="form-control" placeholder="nombre usuario"
+						required="true" requiredMessage="ingrese usuario" />
+					<i class="fa fa-user form-control-feedback"></i>
+				</div>
+				<div class="form-group has-feedback">
+					<p:inputText value="#{loginBean.password}" type="password"
+						id="passUsr" styleClass="form-control" placeholder="contraseña"
+						required="true" requiredMessage="ingrese contraseña" />
+					<i class="fa fa-lock form-control-feedback"></i>
+				</div>
+				
+				<div class="row">
+					<!-- <div class="col-xs-12">
+							<p:selectBooleanCheckbox itemLabel="Recordar"
+								value="#{loginBean.remember}" />
+						</div> -->
+					<p:spacer height="10" />
+					<div class="col-xs-12">
+						<p:commandButton styleClass="btn btn-success btn-block"
+							action="#{loginBean.login_alt}" onclick="showBar();console.log(getBrowserInfo());" id="botonLogin"
+							oncomplete="if(args.validationFailed){hideBar()}" ajax="false"
+							value="Ingresar" update="@form" process="@form"/>
+					</div>
+				</div>
+			</h:form>
+		</div>
+		<!-- /.login-box-body -->
+	</div>
+	<adm:ripple />
+	<h:outputScript library="js" name="admintemplate.js" target="head" />
+
+<style type="text/css">
+	body .load-bar {
+		margin-top: -20px;
+	}
+	
+	.swal2-popup {
+	  font-size: 1.7rem !important;
+	}
+</style>
+
+<script>
+var getBrowserInfo = function() {
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+
+        document.getElementById("loginForm:versionNav").value = 'IE '+(tem[1] || '');
+        
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null){
+        	document.getElementById("loginForm:versionNav").value = tem.slice(1).join(' ').replace('OPR', 'Opera');
+        	return tem.slice(1).join(' ').replace('OPR', 'Opera');
+        }
+    }
+    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+
+    document.getElementById("loginForm:versionNav").value = M.join(' ');
+    
+    return M.join(' ');
+};
+
+
+</script>
+</h:body>
+</html>
